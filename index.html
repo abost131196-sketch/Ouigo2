@@ -1,235 +1,192 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Ticket à gratter doré</title>
-  <style>
-    :root {
-      --gold: #d8a82e;
-      --gold-light: #ffeaa0;
-      --gold-dark: #8b6414;
-      --paper: #fffaf0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Ticket à gratter</title>
 
-    * { box-sizing: border-box; }
+<style>
+  * { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at 20% 20%, #fff7cf 0 2px, transparent 3px),
-        radial-gradient(circle at 80% 70%, #fff7cf 0 2px, transparent 3px),
-        linear-gradient(135deg, #f7d978, #fff3b7 45%, #d7a62c);
-      background-size: 38px 38px, 52px 52px, auto;
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #f5e7b2;
+    font-family: Arial, sans-serif;
+  }
 
-    .ticket {
-      width: min(92vw, 620px);
-      border: 5px solid var(--gold-dark);
-      border-radius: 24px;
-      padding: 12px;
-      background: linear-gradient(145deg, #fff8c9, #d7a42c 25%, #ffeaa0 55%, #b98016);
-      box-shadow: 0 18px 45px rgba(80, 55, 5, .35);
-    }
+  .ticket {
+    width: min(92vw, 500px);
+    padding: 12px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #8f6410, #ffd95c, #b98212, #ffe58a);
+    box-shadow: 0 15px 35px rgba(0,0,0,.25);
+  }
 
-    .ticket-inner {
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-      min-height: 360px;
-      background: var(--paper);
-      border: 2px dashed #a87819;
-      text-align: center;
-    }
+  .ticket-inner {
+    position: relative;
+    overflow: hidden;
+    min-height: 330px;
+    border-radius: 15px;
+    background: #fffaf0;
+    border: 3px solid #b88620;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 35px 25px;
+  }
 
-    h1 {
-      margin: 26px 15px 8px;
-      color: #9a6b12;
-      font-size: clamp(28px, 7vw, 46px);
-      letter-spacing: .04em;
-    }
+  .title {
+    position: absolute;
+    top: 18px;
+    font-size: 24px;
+    font-weight: 900;
+    color: #9a6b10;
+  }
 
-    .hint {
-      margin: 0 15px 18px;
-      color: #795614;
-      font-weight: 700;
-    }
+  .message {
+    font-size: clamp(22px, 6vw, 32px);
+    line-height: 1.3;
+    font-weight: 900;
+    color: #9a6b10;
+  }
 
-    .message {
-      min-height: 170px;
-      display: grid;
-      place-items: center;
-      padding: 28px;
-      margin: 0 22px 28px;
-      border-radius: 14px;
-      border: 2px solid #d7b35a;
-      background: linear-gradient(135deg, #fffdf5, #fff1b5);
-      color: #5f450e;
-      font-size: clamp(19px, 4.5vw, 28px);
-      line-height: 1.35;
-      font-weight: 700;
-    }
+  .scratch-area {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    touch-action: none;
+    cursor: grab;
+  }
 
-    #scratchCanvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      touch-action: none;
-      cursor: grab;
-      border-radius: 14px;
-    }
+  .scratch-area:active {
+    cursor: grabbing;
+  }
 
-    #scratchCanvas:active { cursor: grabbing; }
-
-    .tip {
-      margin: 0 15px 22px;
-      color: #8b6414;
-      font-size: 14px;
-    }
-
-    .reset {
-      margin: 0 0 24px;
-      padding: 10px 18px;
-      border: 0;
-      border-radius: 999px;
-      background: #9a6b12;
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-    }
-  </style>
+  .reset {
+    margin-top: 15px;
+    border: none;
+    border-radius: 20px;
+    padding: 9px 18px;
+    background: #9a6b10;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
 </head>
 
 <body>
-  <main class="ticket" aria-label="Ticket à gratter">
-    <section class="ticket-inner" id="ticket">
-      <h1>🎟️ TICKET À GRATTER</h1>
-      <p class="hint">Gratte ici !</p>
+
+<div>
+  <div class="ticket">
+    <div class="ticket-inner" id="ticket">
+
+      <div class="title">🎟️ TICKET À GRATTER</div>
 
       <div class="message">
-        Bravo, tu as gagné 10€ de réduction grâce aux astuces de rat d’Alex avec le code promo OUIGO : APP10
+        BRAVO tu as gagné 10€ de réduction grâce à mon code promo APP10 de gros rat 🐀💸
       </div>
 
-      <p class="tip">Passe ton doigt sur la zone dorée pour découvrir ton gain ✨</p>
+      <canvas id="scratchCanvas" class="scratch-area"></canvas>
 
-      <canvas id="scratchCanvas" aria-label="Zone à gratter"></canvas>
-    </section>
-
-    <div style="text-align:center;">
-      <button class="reset" id="resetBtn" type="button">Recommencer</button>
     </div>
-  </main>
+  </div>
 
-  <script>
-    const canvas = document.getElementById("scratchCanvas");
-    const ticket = document.getElementById("ticket");
-    const resetBtn = document.getElementById("resetBtn");
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  <div style="text-align:center;">
+    <button class="reset" id="reset">Recommencer</button>
+  </div>
+</div>
 
-    let isDrawing = false;
+<script>
+const canvas = document.getElementById("scratchCanvas");
+const ticket = document.getElementById("ticket");
+const reset = document.getElementById("reset");
+const ctx = canvas.getContext("2d");
 
-    function resizeCanvas() {
-      const rect = ticket.getBoundingClientRect();
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
+let drawing = false;
 
-      canvas.width = Math.round(rect.width * dpr);
-      canvas.height = Math.round(rect.height * dpr);
-      canvas.style.width = rect.width + "px";
-      canvas.style.height = rect.height + "px";
+function setup() {
+  const rect = ticket.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
 
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      drawCover(rect.width, rect.height);
-    }
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  canvas.style.width = rect.width + "px";
+  canvas.style.height = rect.height + "px";
 
-    function drawCover(width, height) {
-      // Fond doré
-      const gradient = ctx.createLinearGradient(0, 0, width, height);
-      gradient.addColorStop(0, "#fff1a8");
-      gradient.addColorStop(0.25, "#c48b18");
-      gradient.addColorStop(0.5, "#ffe58a");
-      gradient.addColorStop(0.75, "#a9710e");
-      gradient.addColorStop(1, "#f5d66d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      ctx.globalCompositeOperation = "source-over";
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, width, height);
+  // Couche dorée à gratter
+  const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+  gradient.addColorStop(0, "#fff0a0");
+  gradient.addColorStop(.25, "#c38b18");
+  gradient.addColorStop(.5, "#ffe275");
+  gradient.addColorStop(.75, "#a96f0b");
+  gradient.addColorStop(1, "#f6d568");
 
-      // Texture façon ticket doré
-      ctx.globalAlpha = 0.22;
-      for (let i = 0; i < 900; i++) {
-        const x = Math.random() * width;
-        const y = Math.random() * height;
-        const r = Math.random() * 1.8;
-        ctx.fillStyle = Math.random() > 0.5 ? "#fff8cf" : "#6f4b09";
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, rect.width, rect.height);
 
-      // Texte sur la couche à gratter
-      ctx.fillStyle = "#6f4b09";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.font = "bold 30px Arial";
-      ctx.fillText("GRATTE ICI !", width / 2, height / 2);
+  // Texte uniquement sur la partie dorée
+  ctx.fillStyle = "#694600";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = "900 32px Arial";
+  ctx.fillText("GRATTE ICI", rect.width / 2, rect.height / 2);
 
-      ctx.font = "bold 16px Arial";
-      ctx.fillText("avec ton doigt ✨", width / 2, height / 2 + 38);
-    }
+  // Petit effet brillant
+  ctx.globalAlpha = 0.2;
+  for (let i = 0; i < 700; i++) {
+    const x = Math.random() * rect.width;
+    const y = Math.random() * rect.height;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(x, y, 1.5, 1.5);
+  }
+  ctx.globalAlpha = 1;
+}
 
-    function scratchAt(clientX, clientY) {
-      const rect = canvas.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
+function scratch(x, y) {
+  const rect = canvas.getBoundingClientRect();
 
-      ctx.save();
-      ctx.globalCompositeOperation = "destination-out";
-      ctx.beginPath();
-      ctx.arc(x, y, 28, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.beginPath();
+  ctx.arc(
+    x - rect.left,
+    y - rect.top,
+    27,
+    0,
+    Math.PI * 2
+  );
+  ctx.fill();
+}
 
-    function start(e) {
-      isDrawing = true;
-      const point = e.touches ? e.touches[0] : e;
-      scratchAt(point.clientX, point.clientY);
-      e.preventDefault();
-    }
+canvas.addEventListener("pointerdown", e => {
+  drawing = true;
+  scratch(e.clientX, e.clientY);
+});
 
-    function move(e) {
-      if (!isDrawing) return;
-      const points = e.touches || [e];
-      for (const point of points) {
-        scratchAt(point.clientX, point.clientY);
-      }
-      e.preventDefault();
-    }
+canvas.addEventListener("pointermove", e => {
+  if (!drawing) return;
+  scratch(e.clientX, e.clientY);
+});
 
-    function stop() {
-      isDrawing = false;
-    }
+window.addEventListener("pointerup", () => {
+  drawing = false;
+});
 
-    canvas.addEventListener("pointerdown", start);
-    canvas.addEventListener("pointermove", move);
-    window.addEventListener("pointerup", stop);
+reset.addEventListener("click", setup);
+window.addEventListener("resize", setup);
 
-    // Compatibilité tactile supplémentaire
-    canvas.addEventListener("touchstart", start, { passive: false });
-    canvas.addEventListener("touchmove", move, { passive: false });
-    canvas.addEventListener("touchend", stop);
+setup();
+</script>
 
-    resetBtn.addEventListener("click", resizeCanvas);
-    window.addEventListener("resize", resizeCanvas);
-
-    resizeCanvas();
-  </script>
 </body>
 </html>
